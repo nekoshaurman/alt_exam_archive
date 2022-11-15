@@ -37,6 +37,7 @@ class Camera:
 if __name__ == "__main__":
     f = 50 # 50mm
     matrix_x, matrix_y = 1920, 1080 # in px
+    # find coordinates in real life in ideal conditions
     camera = Camera(40, 310, 100, 0, 0, 0, 720, 240, f, matrix_x, matrix_y)
 
     print(camera.get_coordinates_ideal())
