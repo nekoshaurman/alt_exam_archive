@@ -1,2 +1,4 @@
-print("hello git")
-print('1')
+
+class Camera:
+    def __init__(self):
+        self.
