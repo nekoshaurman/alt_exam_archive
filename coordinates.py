@@ -11,15 +11,17 @@ class Camera:
         self.pitch = pitch  # pitch(degrees)
         self.yaw = yaw  # yaw(°degrees)
         self.azimut = 0
+
     def set_azimut(self):
         self.azimut = radians(180)
+
     def get_distance(self):
         return 600
+
     def get_coordinates(self):
         lat2 = asin(sin(self.lat)*cos(self.get_distance()/R) + cos(self.lat)*sin(self.get_distance()/R)*cos(self.azimut))
         lon2 = self.lon + atan2(sin(self.azimut)*sin(self.get_distance()/R)*cos(self.lat), cos(self.get_distance()/R) - sin(self.lat) * sin(lat2))
         return degrees(lat2),degrees(lon2)
-
 
 
 if __name__ == "__main__":
@@ -35,4 +37,4 @@ if __name__ == "__main__":
     camera.set_azimut()
     print(degrees(camera.lat), degrees(camera.lon))
     print(*camera.get_coordinates())
-    #print(camera.azimut)
+    #print(camera.azimut()

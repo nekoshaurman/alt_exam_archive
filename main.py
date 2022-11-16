@@ -18,28 +18,36 @@ class Camera:
         self.px = px - matrix_x/2  # pixel X coordinate in the image, px
         self.py = (py - matrix_y/2) * (-1)  # pixel Y coordinate in the image, px
         self.azimut = 0
+
+    # Camera position x
     def get_x_position_ideal(self):
         if self.f != 0:
             return (self.px * alpha * self.alt)/(1000 * self.f)
         else:
             return 0
+
+    # Camera position y
     def get_y_position_ideal(self):
         if self.f != 0:
             return (self.py * alpha * self.alt)/(1000 * self.f)
         else:
             return 0
+
     def set_azimut(self):
         if self.get_y_position_ideal() != 0:
             self.azimut = atan(self.get_x_position_ideal()/self.get_y_position_ideal())
+
+    # Distance to object
     def get_distance(self):
         ix = self.lat + self.get_x_position_ideal()
         iy = self.lon + self.get_y_position_ideal()
         return sqrt(pow(ix,2)+pow(iy,2))
+
+    # Coordinates of object
     def get_coordinates(self):
         lat2 = asin(sin(self.lat)*cos(self.get_distance()/R) + cos(self.lat)*sin(self.get_distance()/R)*cos(self.azimut))
         lon2 = self.lon + atan2(sin(self.azimut)*sin(self.get_distance()/R)*cos(self.lat), cos(self.get_distance()/R) - sin(self.lat) * sin(lat2))
         return degrees(lat2),degrees(lon2)
-
 
 
 if __name__ == "__main__":
@@ -53,13 +61,23 @@ if __name__ == "__main__":
     roll = 0
     pitch = 0
     yaw = 0
-    # find coordinates in real life in ideal conditions
+    # Find coordinates in real life in ideal conditions
     camera = Camera(lat, lon, alt, roll, pitch, yaw, px, py, f, matrix_x, matrix_y)
-    # дрон смотрит на строго север
+    # дрон смотрит строго на север
     camera.set_azimut()
-    print(degrees(camera.lat), degrees(camera.lon))
-    print(camera.get_x_position_ideal(),camera.get_y_position_ideal())
-    print(*camera.get_coordinates())
+
+    print('\nDrone latitude: ', degrees(camera.lat),
+          '\nDrone longitude', degrees(camera.lon))
+
+    print('\nDistance to obj x', camera.get_x_position_ideal(),
+          '\nDistance to obj y', camera.get_y_position_ideal(),
+          '\nDistance to obj', camera.get_distance())
+
+    obj_lat, obj_lon = camera.get_coordinates()
+    print('\nObject latitude', obj_lat,
+          '\nObject longitude', obj_lon)
+
+    #print(*camera.get_coordinates())
     #print(camera.azimut)
 
     # ДАННЫЕ ЗНАЧЕНИЯ НАХОДЯТ КООРДИНАТЫ ТОЧКИ НА ПОЛЕ ЗЕНИТА
