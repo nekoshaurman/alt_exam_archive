@@ -29,7 +29,8 @@ class Camera:
         else:
             return 0
     def set_azimut(self):
-        self.azimut = atan(self.get_x_position_ideal()/self.get_y_position_ideal())
+        if self.get_y_position_ideal() != 0:
+            self.azimut = atan(self.get_x_position_ideal()/self.get_y_position_ideal())
     def get_distance(self):
         ix = self.lat + self.get_x_position_ideal()
         iy = self.lon + self.get_y_position_ideal()
@@ -42,13 +43,13 @@ class Camera:
 
 
 if __name__ == "__main__":
-    f = 50  # 50mm
+    f = 530  # 50mm
     matrix_x, matrix_y = 1920, 1080  # in px
-    px = 720
-    py = 240
-    lat = 64.587222
-    lon = 30.596944
-    alt = 50000
+    px = 80
+    py = 320
+    lat = 59.973017
+    lon = 30.220557
+    alt = 50
     roll = 0
     pitch = 0
     yaw = 0
@@ -60,3 +61,8 @@ if __name__ == "__main__":
     print(camera.get_x_position_ideal(),camera.get_y_position_ideal())
     print(*camera.get_coordinates())
     #print(camera.azimut)
+
+    # ДАННЫЕ ЗНАЧЕНИЯ НАХОДЯТ КООРДИНАТЫ ТОЧКИ НА ПОЛЕ ЗЕНИТА
+    #59.973017000000006 30.220557
+    #-21.88377189547847 5.470942973869618
+    #59.973064281098495 30.220179054598162
