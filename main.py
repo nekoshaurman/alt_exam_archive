@@ -52,5 +52,5 @@ if __name__ == "__main__":
     yaw = 0
     # find coordinates in real life in ideal conditions
     camera = Camera(lat, lon, alt, roll, pitch, yaw, px, py, f, matrix_x, matrix_y)
-
+ ##
     print(camera.get_coordinates_ideal())
