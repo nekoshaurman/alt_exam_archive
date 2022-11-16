@@ -4,8 +4,6 @@ alpha = 1/3.793627  # coefficient for translation mm ---> px
 R = 6372795 #meters
 # (0,0) ---> (1920/2, 1080/2) new center (960, 540)
 
-for_round = 6 # for round float format .6
-
 class Camera:
     def __init__(self, lat, lon, alt, roll, pitch, yaw, px, py, f, m_a, m_b):
         self.lat = radians(lat)  # latitude(deg)
@@ -33,8 +31,8 @@ class Camera:
     def set_azimut(self):
         self.azimut = atan(self.get_x_position_ideal()/self.get_y_position_ideal())
     def get_distance(self):
-        ix = round(self.lat + self.get_x_position_ideal(), for_round)
-        iy = round(self.lon + self.get_y_position_ideal(), for_round)
+        ix = self.lat + self.get_x_position_ideal()
+        iy = self.lon + self.get_y_position_ideal()
         return sqrt(pow(ix,2)+pow(iy,2))
     def get_coordinates(self):
         lat2 = asin(sin(self.lat)*cos(self.get_distance()/R) + cos(self.lat)*sin(self.get_distance()/R)*cos(self.azimut))
