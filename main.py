@@ -5,9 +5,10 @@ R = 6372795 #meters
 # (0,0) ---> (1920/2, 1080/2) new center (960, 540)
 
 class Camera:
-    def __init__(self, lat, lon, alt, roll, pitch, yaw, px, py, f, m_a, m_b):
+    def __init__(self, lat, lon, orientation, alt, roll, pitch, yaw, px, py, f, m_a, m_b):
         self.lat = radians(lat)  # latitude(deg)
         self.lon = radians(lon)  # longitude(deg)
+        self.orientation = orientation #Orientation relative to the North in degrees
         self.alt = alt  # altitude(meters)
         self.roll = roll  # roll(degrees)
         self.pitch = pitch  # pitch(degrees)
@@ -33,6 +34,17 @@ class Camera:
         else:
             return 0
 
+    #Do the turn of coordinates, to face to //////////////////////// NORTH NOT ALREADY DONE
+    def set_the_turn(self):
+        x1 = self.lat #?
+        y1 = self.lon #?
+        phi = self.orientation
+        x2 = x1 * cos(phi) - y1 * sin(phi)
+        y2 = x1 * sin(phi) + y1 * cos(phi)
+        return x2,y2
+
+
+    # Start bearing to the point
     def set_azimut(self):
         if self.get_y_position_ideal() != 0:
             self.azimut = atan(self.get_x_position_ideal()/self.get_y_position_ideal())
