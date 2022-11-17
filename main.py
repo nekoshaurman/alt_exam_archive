@@ -45,8 +45,12 @@ class Camera:
 
     # Coordinates of object
     def get_coordinates(self):
-        lat2 = asin(sin(self.lat)*cos(self.get_distance()/R) + cos(self.lat)*sin(self.get_distance()/R)*cos(self.azimut))
-        lon2 = self.lon + atan2(sin(self.azimut)*sin(self.get_distance()/R)*cos(self.lat), cos(self.get_distance()/R) - sin(self.lat) * sin(lat2))
+        lat1 = self.lat # Latitude of the first point
+        lon1 = self.lon # Longitude of the first point
+        azimut = self.azimut # Start bearing
+        delta = self.get_distance()/R
+        lat2 = asin(sin(lat1)*cos(delta) + cos(lat1)*sin(delta)*cos(azimut)) # Latitude of the second point
+        lon2 = lon1 + atan2(sin(azimut)*sin(delta)*cos(lat1), cos(delta) - sin(lat1) * sin(lat2)) # Longitude of the second point
         return degrees(lat2),degrees(lon2)
 
 
